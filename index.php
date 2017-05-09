@@ -13,10 +13,10 @@ if (isset($_GET['get-date'])) {
     <title></title>
 </head>
 <body>
-    <div pjax-container="true" pjax-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" pjax-event="click" pjax-state="true">
+    <div pjax="true" pjax-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" pjax-time="1000" pjax-response="text" pjax-event="click">
         This block must be restart
     </div>
-    <form pjax-container="true" pjax-href="<?= $_SERVER['PHP_SELF']; ?>" pjax-event="submit" pjax-method="POST">
+    <form pjax="true" method="POST" pjax-method="POST" pjax-href="<?= $_server['php_self']; ?>" action="<?= $_server['php_self']; ?>" pjax-event="submit">
         <input id="" type="text" name="test" value="Hello">
         This block must be restart
         <input type="submit" value="send">
@@ -24,7 +24,6 @@ if (isset($_GET['get-date'])) {
 </body>
 <script src="src/pjax.js"></script>
 <script>
-let t = new PjaxContainer();
-console.log(t);
+PjaxElement.setPjax();
 </script>
 </html>
