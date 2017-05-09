@@ -2,7 +2,7 @@ class PjaxElement {
 
     static setPjax() {
         document.querySelectorAll('[pjax="true"]').forEach( node => {
-            new PjaxElement(node));
+            new PjaxElement(node);
         });
     }
 
