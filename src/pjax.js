@@ -74,13 +74,13 @@ class PjaxElement {
 
     _eventWrapper(e) {
 
-        this._Ajax(this.attr.href, this.attr.method);
+        this._request(this.attr.href, this.attr.method);
 
         if (e) e.preventDefault();
 
     }
 
-    _Ajax(href, method) {
+    _request(href, method) {
 
         let data = {
             method: method ? method : 'GET',
