@@ -13,17 +13,19 @@ if (isset($_GET['get-date'])) {
     <title></title>
 </head>
 <body>
-    <div pjax="true" pjax-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" pjax-time="1000" pjax-response="text" pjax-event="click">
+    <div psxhr="true" psxhr-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" psxhr-time="1000" psxhr-response="text" psxhr-event="click">
         This block must be restart
     </div>
-    <form pjax="true" method="POST" pjax-method="POST" pjax-href="<?= $_server['php_self']; ?>" action="<?= $_server['php_self']; ?>" pjax-event="submit">
+    <form psxhr="true" method="GET" action="<?= $_SERVER['PHP_SELF']; ?>" psxhr-state="true" psxhr-event="submit">
         <input id="" type="text" name="test" value="Hello">
+        <input id="" type="text" name="tes[]" value="ello">
+        <input id="" type="text" name="tes[]" value="Hello">
         This block must be restart
-        <input type="submit" value="send">
+        <input type="submit" value="send" name="test">
     </form>
 </body>
-<script src="src/pjax.js"></script>
+<script src="pjax/src/PSXhr.js"></script>
 <script>
-PjaxElement.setPjax();
+PSXhr.init();
 </script>
 </html>
