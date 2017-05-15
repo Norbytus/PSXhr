@@ -1,12 +1,12 @@
 # PSXhr
 
 ## Description
-This is simple analog pjax(Push State Ajax) write in ES6 standart.
+This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 
-## Attribute list
-* psxhr-container(String) - node element(eements) for update.
+## Attributes list
+* psxhr-container(String) - node element(or elements) for update.
 * psxhr-event(String) - event for call(click, scroll...).
-* psxhr-href(String) - addres for request(if node is a or form and psxhr-href don't set. PSXhr take addres from a.href or form.action).
+* psxhr-href(String) - address for request(if node is a form and psxhr-href is not set. PSXhr takes address from a.href or form.action).
 * psxhr-method(String) - by default GET(If this for and psxhr-method don't set, PSXhr take method form.method).
 * psxhr-state(String) - by default false, if set true it push new state browser history.
 * psxhr-callback(String) - callback which takes one parameter in format response.
