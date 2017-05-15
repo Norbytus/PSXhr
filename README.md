@@ -14,7 +14,7 @@ This is simple analog pjax(Push State Ajax) write in ES6 standart.
 * psxhr-response(String) - form response for fetch(arrayBuffer, blob, formData, json, text).
 * psxhr-time/interval(Integer) - maybe on of them, if set both of them will work only time.
 ## Requirments
-Support ES6 standart or include polyfill
+Browser with support ES6 standart or include polyfill(fetch)
 
 ## Example
 # First
