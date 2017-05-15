@@ -12,7 +12,7 @@ This is simple analog pjax(Push State Ajax) write in ES6 standart.
 * psxhr-callback(String) - callback which takes one parameter in format response.
 * psxhr-promise(String) - callback which takes one parameter, Promise from fetch.
 * psxhr-response(String) - form response for fetch(arrayBuffer, blob, formData, json, text).
-* psxhr-time/interval(Integer) - maybe on of them, if set both of them will work only time.
+* psxhr-time/interval(Integer) - maybe one of them, if set both of them will work only time.
 ## Requirments
 Browser with support ES6 standart or include polyfill(fetch)
 
