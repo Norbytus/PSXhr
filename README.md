@@ -7,9 +7,9 @@ This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 * psxhr-container(String) - node element(or elements) for update.
 * psxhr-event(String) - event for call(click, scroll...).
 * psxhr-href(String) - address for request(if node is a form and psxhr-href is not set. PSXhr takes address from a.href or form.action).
-* psxhr-method(String) - by default GET(If this for and psxhr-method don't set, PSXhr take method form.method).
-* psxhr-state(String) - by default false, if set true it push new state browser history.
-* psxhr-callback(String) - callback which takes one parameter in format response.
+* psxhr-method(String) - by default GET(if stay empty PSXhr will use form.method for this one).
+* psxhr-state(String) - by default is false, in case of true it pushes new state to the browser history.
+* psxhr-callback(String) - callback which takes one parameter as response.
 * psxhr-promise(String) - callback which takes one parameter, Promise from fetch.
 * psxhr-response(String) - form response for fetch(arrayBuffer, blob, formData, json, text).
 * psxhr-time/interval(Integer) - maybe one of them, if set both of them will work only time.
