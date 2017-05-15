@@ -52,7 +52,7 @@ if (isset($_GET['some_get']))
 </script>
 ```
 # Third
-This example will update node div.replace every 10 seconds and state in browser history
+This example will update node div.replace every 10 seconds and push new state in browser history
 ```php
 <?php
 if (isset($_GET['some_get']))
