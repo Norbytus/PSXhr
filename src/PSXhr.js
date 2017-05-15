@@ -17,7 +17,8 @@ const ATTR_LIST = {
     'callback': ['psxhr-callback'],
     'interval': ['psxhr-interval'],
     'time': ['psxhr-time'],
-    'response': ['psxhr-response',]
+    'response': ['psxhr-response',],
+    'promise': ['psxhr-promise']
 }
 
 class Aliases {
@@ -38,17 +39,21 @@ class Aliases {
 class PSXhr {
 
     static init() {
+
         Array.from(document.querySelectorAll('[psxhr="true"]'))
             .forEach( node => {
                 new PSXhr(node);
             });
+
     }
 
     constructor(node) {
+
         this._attr = {};
         this._node = node;
         this._checkAttribute(node);
         this._setEvent();
+
     }
 
     _checkAttribute() {
@@ -66,10 +71,12 @@ class PSXhr {
     }
 
     _checkAlias(aliases) {
+
         let attributes = this._node.attributes;
         for (var alias of aliases)
             if (attributes.getNamedItem(alias)) return alias;
         return false;
+
     }
 
     _isForm() { return this._node.tagName == 'FORM'; }
@@ -87,11 +94,13 @@ class PSXhr {
             node.addEventListener(event, this._eventWrapper.bind(this), false);
         });
 
+        if (this._attr.time) {
+            setTimeout(this._eventWrapper.bind(this), this._attr.time);
+            this._attr.interval = false;
+        }
+
         if (this._attr.interval)
             setInterval(this._eventWrapper.bind(this), this._attr.time);
-
-        if (this._attr.time)
-            setTimeout(this._eventWrapper.bind(this), this._attr.time);
 
     }
 
@@ -119,6 +128,13 @@ class PSXhr {
             ? this._attr.href
             : window.location.href;
 
+        let fetchPromise = fetch(href, data);
+
+        if (this._attr.promise) {
+            eval(this._attr.promise)(fetchPromise)
+            return false;
+        }
+
         fetch(href, data)
             .then( res => {
 
@@ -131,7 +147,8 @@ class PSXhr {
             })
             .then( res => {
 
-                this._defaultHandler(res);
+                if (this._attr.callback) eval(this._attr.callback)(res);
+                else this._defaultHandler(res);
 
                 if (JSON.parse(this._attr.state))
                     history.pushState({test: 'test'}, '', href);
@@ -145,12 +162,14 @@ class PSXhr {
 
     _defaultHandler(res) {
 
-        if (!this._attr.container)
-            this._node.innerHTML = res;
+        if (!this._attr.container) this._node.innerHTML = res;
         else {
-            let container = document.querySelector(this._attr.container);
+            let container = document.querySelectorAll(this._attr.container);
             if (!container) return false;
-            container.innerHTML = res;
+
+            Array.from(container).forEach( node => {
+                node.innerHTML = res;
+            })
         }
 
     }

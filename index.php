@@ -13,10 +13,11 @@ if (isset($_GET['get-date'])) {
     <title></title>
 </head>
 <body>
-    <div psxhr="true" psxhr-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" psxhr-time="1000" psxhr-response="text" psxhr-event="click">
+    <div class="cont" psxhr="true" psxhr-href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" psxhr-time="1000" psxhr-promise="testPromis" psxhr-event="click">
         This block must be restart
     </div>
-    <form psxhr="true" method="GET" action="<?= $_SERVER['PHP_SELF']; ?>" psxhr-state="true" psxhr-event="submit">
+    <a psxhr="true" psxhr-container=".cont" href="<?= $_SERVER['PHP_SELF']; ?>?get-date=true" psxhr-event="click">Link</a>
+    <form class="cont" psxhr="true" method="GET" action="<?= $_SERVER['PHP_SELF']; ?>" psxhr-state="true" psxhr-event="submit">
         <input id="" type="text" name="test" value="Hello">
         <input id="" type="text" name="tes[]" value="ello">
         <input id="" type="text" name="tes[]" value="Hello">
@@ -24,8 +25,21 @@ if (isset($_GET['get-date'])) {
         <input type="submit" value="send" name="test">
     </form>
 </body>
-<script src="pjax/src/PSXhr.js"></script>
+<script src="public/PSXhr.min.js"></script>
 <script>
 PSXhr.init();
+
+function testPromis(promise) {
+
+promise.then( res => {
+    return res.text();
+}).then( text => {
+console.log(text)
+}).catch( e => {
+console.log(e);
+})
+
+}
+
 </script>
 </html>
