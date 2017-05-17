@@ -17,7 +17,7 @@ This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 Browser with support ES6 standart or include polyfill(fetch)
 
 ## Examples
-# First
+### First
  After click on node with class .action change contain node width class .replace.
 ```php
 <?php
@@ -34,7 +34,7 @@ if (isset($_GET['some_get']))
 </script>
 ```
 
-# Second
+### Second
 Examplae like first but insted node div.action tag a
 ```php
 <?php
@@ -49,7 +49,7 @@ if (isset($_GET['some_get']))
     PSXhr.init();
 </script>
 ```
-# Third
+### Third
 This example will update node div.replace every 10 seconds and push new state in browser history
 ```php
 <?php
@@ -64,7 +64,7 @@ if (isset($_GET['some_get']))
     PSXhr.init();
 </script>
 ```
-# Four
+### Four
 After submit send from data by form.action
 ```php
 <?php
