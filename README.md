@@ -16,12 +16,9 @@ This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 ## Requirments
 Browser with support ES6 standart or include polyfill(fetch)
 
-## Example
+## Examples
 # First
- psxhr-method - method for request(by default it's GET)
- psxhr-href - addres for request
- psxhr-container - by default psxhr write response in current node.
- After click on node with class .action in node width class .replace will containt response from server.
+ After click on node with class .action change contain node width class .replace.
 ```php
 <?php
 if (isset($_GET['some_get']))
@@ -38,6 +35,7 @@ if (isset($_GET['some_get']))
 ```
 
 # Second
+Examplae like first but insted node div.action tag a
 ```php
 <?php
 if (isset($_GET['some_get']))
