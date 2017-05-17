@@ -115,8 +115,10 @@ class PSXhr {
 
     _request() {
 
+        let attr = this._attr;
+
         let data = {
-            method: this._attr.method ? this._attr.method : 'GET',
+            method: attr.method ? attr.method : 'GET',
             headers: {'X-REQUESTED-WITH': 'XMLHttpRequest'},
         };
 
@@ -124,22 +126,23 @@ class PSXhr {
         else if (data.method == 'POST' && this._isForm())
             data.body = new FormData(this._node);
 
-        var href = this._attr.href
-            ? this._attr.href
+        var href = attr.href
+            ? attr.href
             : window.location.href;
 
         let fetchPromise = fetch(href, data);
 
-        if (this._attr.promise) {
-            eval(this._attr.promise)(fetchPromise)
+        if (attr.promise && this._callbackExsists(attr.promise)) {
+            let fn = window[attr.promise];
+            fn(fetchPromise);
             return false;
         }
 
-        fetch(href, data)
+        fetchPromise
             .then( res => {
 
-                let responseType = RESPONSE[this._attr.response]
-                    ? RESPONSE[this._attr.response]
+                let responseType = RESPONSE[attr.response]
+                    ? RESPONSE[attr.response]
                     : 'text';
 
                 return res[responseType]();
@@ -147,10 +150,12 @@ class PSXhr {
             })
             .then( res => {
 
-                if (this._attr.callback) eval(this._attr.callback)(res);
-                else this._defaultHandler(res);
+                if (attr.callback && this._callbackExsists(attr.callback)) {
+                    let fn = window[attr.promise];
+                    fn(res);
+                } else this._defaultHandler(res);
 
-                if (JSON.parse(this._attr.state))
+                if (JSON.parse(attr.state))
                     history.pushState({test: 'test'}, '', href);
 
             })
@@ -158,6 +163,10 @@ class PSXhr {
                 console.log(err);
             })
 
+    }
+
+    _callbackExsists(callbackName) {
+        return typeof window[callbackName] === 'function' ? true : false;
     }
 
     _defaultHandler(res) {
