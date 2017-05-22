@@ -120,6 +120,7 @@ class PSXhr {
         let data = {
             method: attr.method ? attr.method : 'GET',
             headers: {'X-REQUESTED-WITH': 'XMLHttpRequest'},
+            credentials: 'same-origin'
         };
 
         if (data.method == 'POST') data.body = new FormData();
