@@ -43,7 +43,8 @@ class PSXhr {
 
         Array.from(document.querySelectorAll('[psxhr="true"]'))
             .forEach( node => {
-                new PSXhr(node);
+                let psxhr = new PSXhr(node);
+                psxhr.start();
             });
 
     }
@@ -52,7 +53,24 @@ class PSXhr {
 
         this._attr = {};
         this._node = node;
-        this._checkAttribute(node);
+
+    }
+
+    set container(container) { this._attr.container = container; }
+    set event(event) { this._attr.event = event; }
+    set observ(callback) { this._attr.observ = callback; }
+    set href(href) { this._attr.href = href; }
+    set method(method) { this._attr.method = metho; }
+    set state(bool) { this._attr.method = bool; }
+    set callback(callback) { this._attr.callback = callback; }
+    set interval(time) { this._attr.interval = time; }
+    set time(time) { this._attr.time = time; }
+    set response(responseType) { this._attr.response = responseType; }
+    set promise(callback) { this._attr.promise = callback; }
+
+    start() {
+
+        this._checkAttribute(this._node);
         if (this._attr.observ) this._setObservServer();
         this._setEvent();
 
@@ -63,10 +81,11 @@ class PSXhr {
         let pool = [];
         let callback = this._attr.observ;
 
-        if (!this._callbackExsists(callback))
+
+        if (!this._callbackExsists(callback) && typeof callback != 'function')
             return false;
         else
-            callback = window[callback];
+            callback = this._getCallback(callback);
 
         if (!this._attr.container)
             pool.push(this._node);
@@ -100,7 +119,7 @@ class PSXhr {
             result[attr] = name ? this._node.getAttribute(name) : false;
         })
 
-        this._attr = result;
+        this._attr = Object.assign(result, this._attr);
 
     }
 
@@ -168,7 +187,7 @@ class PSXhr {
         let fetchPromise = fetch(href, data);
 
         if (attr.promise && this._callbackExsists(attr.promise)) {
-            let fn = window[attr.promise];
+            let fn = this._getCallback(attr.promise);
             fn(fetchPromise);
             return false;
         }
@@ -186,7 +205,7 @@ class PSXhr {
             .then( res => {
 
                 if (attr.callback && this._callbackExsists(attr.callback)) {
-                    let fn = window[attr.promise];
+                    let fn = this._getCallback(attt.callback)
                     fn(res);
                 } else this._defaultHandler(res);
 
@@ -201,7 +220,21 @@ class PSXhr {
     }
 
     _callbackExsists(callbackName) {
-        return typeof window[callbackName] === 'function' ? true : false;
+
+        if (typeof window[callbackName] === 'function' || typeof callbackName)
+            return true;
+        else
+            return false;
+
+    }
+
+    _getCallback(callbackName) {
+
+        if (typeof callbackName === 'function')
+            return callbackName;
+        else if (typeof window[callbackName] == 'function')
+            return window[callbackName];
+
     }
 
     _defaultHandler(res) {
