@@ -11,6 +11,7 @@ const RESPONSE = {
 const ATTR_LIST = {
     'container': ['psxhr-container', 'container'],
     'event': ['psxhr-event'],
+    'observ': ['psxhr-observ'],
     'href':  ['psxhr-href', 'href', 'action'],
     'method': ['psxhr-method', 'method'],
     'state': ['psxhr-state'],
@@ -52,7 +53,40 @@ class PSXhr {
         this._attr = {};
         this._node = node;
         this._checkAttribute(node);
+        if (this._attr.observ) this._setObservServer();
         this._setEvent();
+
+    }
+
+    _setObservServer() {
+
+        let pool = [];
+        let callback = this._attr.observ;
+
+        if (!this._callbackExsists(callback))
+            return false;
+        else
+            callback = window[callback];
+
+        if (!this._attr.container)
+            pool.push(this._node);
+        else {
+
+            let container = document.querySelectorAll(this._attr.container);
+
+            if (!container) return false;
+
+            Array.from(container).forEach( node => {
+                pool.push(node);
+            })
+
+        }
+
+        let mo = new MutationObserver( m => { callback(m); });
+
+        let config = { attributes: true, childList: true, characterData: true };
+
+        pool.forEach( node => { mo.observe(node, config); })
 
     }
 
@@ -174,12 +208,14 @@ class PSXhr {
 
         if (!this._attr.container) this._node.innerHTML = res;
         else {
+
             let container = document.querySelectorAll(this._attr.container);
             if (!container) return false;
 
             Array.from(container).forEach( node => {
                 node.innerHTML = res;
             })
+
         }
 
     }
