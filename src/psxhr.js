@@ -47,7 +47,7 @@ class PSXhr {
     set event(event) { this._attr.event = event; }
     set observ(callback) { this._attr.observ = callback; }
     set href(href) { this._attr.href = href; }
-    set method(method) { this._attr.method = metho; }
+    set method(method) { this._attr.method = method; }
     set state(bool) { this._attr.method = bool; }
     set callback(callback) { this._attr.callback = callback; }
     set interval(time) { this._attr.interval = time; }
