@@ -18,13 +18,13 @@ gulp.task('watch', () => {
 
 gulp.task('build-js', () => {
     gulp.src('./src/js/event-emitter.js')
-        .pipe(addsrc.append('./src/PSXhr.js'))
+        .pipe(addsrc.append('./src/aliases.js'))
+        .pipe(addsrc.append('./src/psxhr.js'))
         .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(jsmin())
         .pipe(concat('PSXhr.min.js'))
         .pipe(sourcemaps.write('/maps'))
-        .pipe(gulp.dest('./public/'))
-        .pipe(notify("Build js done."));
+        .pipe(gulp.dest('./public/'));
 
 });
