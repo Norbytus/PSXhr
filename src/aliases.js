@@ -1,3 +1,5 @@
+'use strict'
+
 class Aliases {
 
     constructor(key, aliases) {
@@ -5,11 +7,7 @@ class Aliases {
         this._data.key = aliases;
     }
 
-    check(key, callback) {
-
-        return callback(this._data.key);
-
-    }
+    check(key, callback) { return callback(this._data.key); }
 
 }
 
