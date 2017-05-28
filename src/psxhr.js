@@ -22,7 +22,6 @@ const ATTR_LIST = {
     'interval': ['psxhr-interval'],
     'time': ['psxhr-time'],
     'response': ['psxhr-response',],
-    'promise': ['psxhr-promise']
 }
 
 class PSXhr {
@@ -72,7 +71,6 @@ class PSXhr {
     set interval(time) { this._attr.interval = time; }
     set time(time) { this._attr.time = time; }
     set response(responseType) { this._attr.response = responseType; }
-    set promise(callback) { this._attr.promise = callback; }
 
     start() {
 
@@ -229,7 +227,6 @@ class PSXhr {
                 this._events.error.emit(error);
                 console.log(error);
             });
-
 
     }
 
