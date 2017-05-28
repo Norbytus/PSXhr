@@ -12,6 +12,7 @@ This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 * psxhr-callback(String) - callback which takes one parameter as response.
 * psxhr-response(String) - form response for fetch(arrayBuffer, blob, formData, json, text).
 * psxhr-time/interval(Integer) - maybe one of them, if set both of them will work only time.
+* psxhr-observ(String) - callback for https://developer.mozilla.org/ru/docs/Web/API/MutationObserver.
 ## Create in clean javascript
 ```javascript
 let psx = document.querySelector('.some_node');
@@ -24,6 +25,7 @@ psx.callback = response => {/*...*/} //Analog psxhr-callback attribute.
 psx.response = 'json' //Analog psxhr-response attribute.
 psx.time = '1000' //Analog psxhr-time attribute.
 psx.interval = '1000' //Analog psxhr-interval attribute.
+
 
 psx.before = response => {
     /*...*/
