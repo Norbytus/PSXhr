@@ -18,6 +18,7 @@ gulp.task('watch', () => {
 
 gulp.task('build-js', () => {
     gulp.src('./src/js/event-emitter.js')
+        .pipe(addsrc.append('./src/event-emitter.js'))
         .pipe(addsrc.append('./src/aliases.js'))
         .pipe(addsrc.append('./src/psxhr.js'))
         .pipe(sourcemaps.init())
