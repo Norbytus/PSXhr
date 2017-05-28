@@ -10,9 +10,33 @@ This is a simple analog of pjax(Push State Ajax) written in ES6 standard.
 * psxhr-method(String) - by default GET(if stay empty PSXhr will use form.method for this one).
 * psxhr-state(String) - by default is false, in case of true it pushes new state to the browser history.
 * psxhr-callback(String) - callback which takes one parameter as response.
-* psxhr-promise(String) - callback which takes one parameter, Promise from fetch.
 * psxhr-response(String) - form response for fetch(arrayBuffer, blob, formData, json, text).
 * psxhr-time/interval(Integer) - maybe one of them, if set both of them will work only time.
+## Create in clean javascript
+```javascript
+let psx = document.querySelector('.some_node');
+psx.container = document.querySelectorAll('.some_nodes'); //Analog psxhr-container attribute.
+psx.event = 'click' //Analog psxhr-event attribute.
+psx.href = 'some_link' //Analog psxhr-href attribute.
+psx.method = 'GET/POST' //Analog psxhr-method attribute.
+psx.state = false //Analog psxhr-state attribute.
+psx.callback = response => {/*...*/} //Analog psxhr-callback attribute.
+psx.response = 'json' //Analog psxhr-response attribute.
+psx.time = '1000' //Analog psxhr-time attribute.
+psx.interval = '1000' //Analog psxhr-interval attribute.
+
+psx.before = response => {
+    /*...*/
+    return false // if function return false PSXhr stop on this momemt
+}
+psx.after = formatAnswer => {
+    /*...*/
+}
+psx.error = error => {
+    /*...*/
+}
+
+```
 ## Requirments
 Browser with support ES6 standart or include polyfill(fetch)
 
