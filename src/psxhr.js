@@ -1,6 +1,7 @@
 'use strict'
 
 import Aliases from 'aliases.js';
+import EventEmitter from 'event-emitter.js';
 
 const RESPONSE = {
     array : 'arrayBuffer',
@@ -39,8 +40,26 @@ class PSXhr {
     constructor(node) {
 
         this._attr = {};
+        this._events = new EventEmitter();
+        this._events = {
+            before: new EventEmitter(),
+            after: new EventEmitter(),
+            error: new EventEmitter(),
+        }
         this._node = node;
 
+    }
+
+    set before(callback) {
+        this._events.before.push(callback);
+    }
+
+    set after(callback) {
+        this._events.after.push(callback);
+    }
+
+    set error(callback) {
+        this._events.error.push(callback);
     }
 
     set container(container) { this._attr.container = container; }
@@ -175,33 +194,42 @@ class PSXhr {
             : window.location.href;
 
         if (JSON.parse(attr.state))
-            history.pushState({test: 'test'}, '', href);
+            history.pushState(null, '', href);
 
-         let fetchPromise = fetch(href, data);
+        let responseType = RESPONSE[attr.response]
+            ? RESPONSE[attr.response]
+            : 'text';
 
-         if (this._dispatchCallback('promise', fetchPromise)) return false;
 
-         fetchPromise
-             .then( res => {
+        fetch(href, data)
+            .then( response => {
 
-                 let responseType = RESPONSE[attr.response]
-                     ? RESPONSE[attr.response]
-                     : 'text';
+                if (this._events.before.emit(response) === false)
+                    throw('Stop PSXhr');
 
-                 return res[responseType]();
+                return response[responseType]();
 
-             })
-             .then( res => {
+            })
+            .then( response => {
 
-                 if (this._dispatchCallback('callback', res))
-                     return false;
-                 else
-                     this._defaultHandler(res);
+                if (this._dispatchCallback('callback', response))
+                    return false;
+                else
+                    this._defaultHandler(response);
 
-             })
-             .catch( err => {
-                 console.log(err);
-             })
+                return response;
+
+            })
+            .then( response => {
+
+                this._events.after.emit(response)
+
+            })
+            .catch( error => {
+                this._events.error.emit(error);
+                console.log(error);
+            });
+
 
     }
 
@@ -219,10 +247,7 @@ class PSXhr {
 
     _callbackExsists(callbackName) {
 
-        if (typeof window[callbackName] === 'function' || typeof callbackName)
-            return true;
-        else
-            return false;
+        return typeof window[callbackName] === 'function' || typeof callbackName;
 
     }
 
